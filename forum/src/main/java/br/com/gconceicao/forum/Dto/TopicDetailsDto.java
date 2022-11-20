@@ -1,12 +1,16 @@
 package br.com.gconceicao.forum.Dto;
 
+import br.com.gconceicao.forum.models.Course;
+import br.com.gconceicao.forum.models.StatusTopic;
+import br.com.gconceicao.forum.models.Topic;
+import br.com.gconceicao.forum.models.UserForum;
+import org.h2.engine.User;
+
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import br.com.gconceicao.forum.models.StatusTopic;
-import br.com.gconceicao.forum.models.Topic;
 
 public class TopicDetailsDto {
 
@@ -14,7 +18,10 @@ public class TopicDetailsDto {
 	private String title;
 	private String message;
 	private LocalDateTime creationDate;
-	private String author;
+	@ManyToOne()
+	private UserForumDto author;
+	@ManyToOne()
+	private Course course;
 	private StatusTopic status;
 	private List<AnswerTopicDto> answers;	
 	
@@ -23,8 +30,9 @@ public class TopicDetailsDto {
 		this.title= topic.getTitle();
 		this.message = topic.getMessage();
 		this.creationDate = topic.getCreationDate();
+		this.course = topic.getCourse();
 		this.status = topic.getStatus();
-		this.author = topic.getUser().getName();
+		this.author = new UserForumDto(topic.getUser().getId(), topic.getUser().getName());
 		this.answers = new ArrayList<>();
 		this.answers.addAll(topic.getAnswers().stream().map(AnswerTopicDto :: new).collect(Collectors.toList()));
 		
@@ -62,11 +70,11 @@ public class TopicDetailsDto {
 		this.creationDate = creationDate;
 	}
 
-	public String getAuthor() {
+	public UserForumDto getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(String author) {
+	public void setAuthor(UserForumDto author) {
 		this.author = author;
 	}
 
@@ -85,6 +93,20 @@ public class TopicDetailsDto {
 	public void setAnswers(List<AnswerTopicDto> answers) {
 		this.answers = answers;
 	}
-	
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public Topic convertToTopic(TopicDetailsDto topicDetailsDto, UserForum user){
+		//String title, String message, Course course, UserForum user
+		Topic topic = new Topic(topicDetailsDto.getTitle(), topicDetailsDto.getMessage(), topicDetailsDto.getCourse(), user);
+		topic.setId(topicDetailsDto.getId()) ;
+		return topic;
+	}
 	
 }

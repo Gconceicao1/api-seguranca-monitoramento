@@ -13,7 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.com.gconceicao.forum.controller.TokenService;
+import br.com.gconceicao.forum.service.TokenService;
 import br.com.gconceicao.forum.service.UserForumService;
 
 @EnableWebSecurity
@@ -40,6 +40,8 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter{
 		.antMatchers(HttpMethod.GET, "/topic/*").permitAll()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+		.antMatchers(HttpMethod.GET, "/h2-console/**").permitAll()
+		.antMatchers(HttpMethod.POST, "/h2-console/**").permitAll()
 		.anyRequest().authenticated()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

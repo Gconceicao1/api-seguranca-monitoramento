@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.gconceicao.forum.Dto.LoginDto;
 import br.com.gconceicao.forum.config.validation.exceptions.AuthException;
 import br.com.gconceicao.forum.models.Token;
+import br.com.gconceicao.forum.service.TokenService;
 
 @RestController
 @RequestMapping("/auth")

@@ -1,15 +1,4 @@
-package br.com.gconceicao.forum.controller;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.Random;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
-
-import com.google.common.hash.Hashing;
+package br.com.gconceicao.forum.service;
 
 import br.com.gconceicao.forum.models.Token;
 import br.com.gconceicao.forum.models.UserForum;
@@ -17,6 +6,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class TokenService {
@@ -43,7 +37,6 @@ public class TokenService {
 		
 		return new Token(Token, expirationDate.getTime());
 	}
-	
 
 	public boolean isValidtoken(String token) {
 		try {
@@ -53,8 +46,6 @@ public class TokenService {
 			return false;
 		}
 	}
-
-
 	public Long getUserId(String token) {
 		Jws<Claims> parseClaimsJws = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
 		return Long.parseLong(parseClaimsJws.getBody().getSubject()) ;

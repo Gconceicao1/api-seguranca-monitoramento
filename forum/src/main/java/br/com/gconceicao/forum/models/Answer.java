@@ -1,13 +1,8 @@
 package br.com.gconceicao.forum.models;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Answer {
@@ -16,17 +11,22 @@ public class Answer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String message;
-	private StatusTopic topic;
+	private StatusTopic topicStatus;
+
 	private LocalDateTime creationDate = LocalDateTime.now();
 	@ManyToOne
 	private UserForum author;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Topic topic;
 	private boolean solution = false;
 	
 	
 	public Answer(){}
-	public Answer(long id, String message, StatusTopic topic, LocalDateTime creationDate, UserForum author, boolean solution) {
+	public Answer(long id, String message, StatusTopic topicStatus, LocalDateTime creationDate, UserForum author, boolean solution, Topic topic) {
 		this.id = id;
 		this.message = message;
+		this.topicStatus = topicStatus;
 		this.topic = topic;
 		this.creationDate = creationDate;
 		this.author = author;
@@ -35,23 +35,24 @@ public class Answer {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(author, creationDate, id, message, solution, topic);
+		return Objects.hash(author, creationDate, id, message, solution, topicStatus);
 	}
-	
+
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Answer other = (Answer) obj;
-		return Objects.equals(author, other.author) && Objects.equals(creationDate, other.creationDate)
-				&& id == other.id && Objects.equals(message, other.message) && solution == other.solution
-				&& topic == other.topic;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Answer answer = (Answer) o;
+		return id == answer.id
+				&& solution == answer.solution
+				&& message.equals(answer.message)
+				&& topicStatus == answer.topicStatus
+				&& creationDate.equals(answer.creationDate)
+				&& author.equals(answer.author)
+				&& topic.equals(answer.topic);
 	}
-	
+
+
 	public long getId() {
 		return id;
 	}
@@ -64,11 +65,11 @@ public class Answer {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public StatusTopic getTopic() {
-		return topic;
+	public StatusTopic getTopicStatus() {
+		return topicStatus;
 	}
 	public void setTopic(StatusTopic topic) {
-		this.topic = topic;
+		this.topicStatus = topic;
 	}
 	public LocalDateTime getCreationDate() {
 		return creationDate;
@@ -88,8 +89,12 @@ public class Answer {
 	public void setSolution(boolean solution) {
 		this.solution = solution;
 	}
-	
-	
-	
-	
+
+	public Topic getTopic() {
+		return topic;
+	}
+
+	public void setTopic(Topic topic) {
+		this.topic = topic;
+	}
 }

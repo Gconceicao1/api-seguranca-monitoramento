@@ -20,8 +20,14 @@ INSERT INTO TOPIC(title,message,creation_date,status,user_id,course_id) values('
 INSERT INTO TOPIC(title,message,creation_date,status,user_id,course_id) values('dúvida9','Tag HTML IMG','2020-10-10 20:00:00', 'NOT_ANSWERED',3,2);
 
 
-insert into ANSWER(creation_date,message,solution,topic,author_id) values('2020-10-15 19:00:00', 'Mete um else que resolve', 0, 1,2);
-insert into ANSWER(creation_date,message,solution,topic,author_id) values('2020-10-15 19:00:00', 'Manda um print do codigo1', 0, 1,2);
-insert into ANSWER(creation_date,message,solution,topic,author_id) values('2020-10-15 19:00:00', 'Manda um print do codigo2', 0, 1,3);
-insert into ANSWER(creation_date,message,solution,topic,author_id) values('2020-10-15 19:00:00', 'Manda um print do codigo3', 0, 1,4);
-insert into ANSWER(creation_date,message,solution,topic,author_id) values('2020-10-15 19:00:00', 'Manda um print do codigo', 0, 1,1);
+insert into ANSWER(creation_date,message,solution,author_id) values('2020-10-15 19:00:00', 'Mete um else que resolve', 0, 2);
+insert into ANSWER(creation_date,message,solution,author_id) values('2020-10-15 19:00:00', 'Manda um print do codigo1', 0, 2);
+insert into ANSWER(creation_date,message,solution,author_id) values('2020-10-15 19:00:00', 'Manda um print do codigo2', 0, 3);
+insert into ANSWER(creation_date,message,solution,author_id) values('2020-10-15 19:00:00', 'Manda um print do codigo3', 0, 4);
+insert into ANSWER(creation_date,message,solution,author_id) values('2020-10-15 19:00:00', 'Manda um print do codigo', 0, 1);
+
+-- INSERT INTO topic_answers (topic_id,answers_id) values(1, 1);
+-- INSERT INTO topic_answers (topic_id,answers_id) values(1, 2);
+-- INSERT INTO topic_answers (topic_id,answers_id) values(1, 3);
+-- INSERT INTO topic_answers (topic_id,answers_id) values(1, 4);
+-- INSERT INTO topic_answers (topic_id,answers_id) values(1, 5);

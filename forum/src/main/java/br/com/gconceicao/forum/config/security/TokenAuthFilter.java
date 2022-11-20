@@ -11,8 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import br.com.gconceicao.forum.controller.TokenService;
 import br.com.gconceicao.forum.models.UserForum;
+import br.com.gconceicao.forum.service.TokenService;
 import br.com.gconceicao.forum.service.UserForumService;
 
 public class TokenAuthFilter extends OncePerRequestFilter{
